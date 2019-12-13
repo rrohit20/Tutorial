@@ -1,0 +1,126 @@
+----------------------
+git init
+git add .
+git commit -m "Fist Commit"
+--create repository in git site
+git remote add origin https://github.com/rohitrawal/Angular2Demo.git
+git push origin master
+---
+git pull origin master
+git branch branchname --create a branch
+git branch -- to check which branch we are right now
+git branch -d branchname -- delete branch
+git checkout branchname -- switch one branch to another branch
+git log --help to see history of repository
+git stash -- change will not reflect in master branch if we will switch after stash. It means if we are switching the
+	     branch without commit or stash then change will reflect in master branch.
+git revert commitid -- get the commitid by using git log
+git diff commitid1 commitid2 -- provide the difference between two commit
+git diff HEAD . -- latest coomit and latest code now
+
+-------------------------------------------------------------------------------------------------------------
+
+git stash
+git checkout develop
+git pull origin develop
+git flow feature start 71900
+	--Move to stage, commit and Push stage
+git stash apply
+git flow bugfix start ticket name
+git checkout bugfix/74605
+git flow feature checkout 71900
+
+
+
+
+git commit -m "initial create script identity  removed"
+git push
+
+
+git checkout master
+git checkout -b phoenix-nextgen-Scripts
+ls
+pwd
+git add New_Script_Create.sql
+git commit -m " Identity Removed Create script"
+git push origin phoenix-nextgen-Scripts
+
+-------------------
+Add new file in local repository
+touch filename.extensionname
+
+Initialize git repository which create git folder (hidden folder)
+git init
+
+Add User Name and Email in repository
+git config --global user.name "Rohit Rawal"
+git config --global user.email "rohit.rawal@accionlabs.com"
+
+Add/Update File to stage
+git add filename.extensionname
+
+Add/Update all files to stage
+git add .
+
+Remove File from stage
+git rm --cached  filename.extensionname
+
+Check what is in the staging area 
+git status
+
+Commit staging area
+----
+git commit 
+Click on i to make it in insert mode
+uncomment (Remove #) Initial Commit
+Now get out of this window click esc and type :wq
+-----
+below line will escape editing
+git commit -m 'Write Comment'
+-----
+
+Ignore the file which we don't want to include
+touch .gitignore
+Add the filename with extensionname inside the gitignore file and it will not add in staging
+Add /foldername inside the gitignore file and it will not add in staging
+
+Add new branch
+git branch branchname
+After adding the branch we have to commit
+git commit -m 'Add Comment'
+
+Start work on new branch
+git checkout newbranchname
+
+Merge New Branch changes in master
+git checkout master
+git merge newbranchname
+Editot press i 
+Add Comment below Merge branch 'newbranchname'
+WriteNewcomment
+Now get out of this window click esc and type :wq
+
+-----------
+provide the list of repository that we have
+git remote
+
+Add Changes in remote repository
+git remote add origin https://github.com/myname/sample.git
+git push -u origin master
+
+Stash Command
+
+Save Stash 
+git stash save "Add Comment for Stash"
+
+Provide list of Stash
+git stash list
+
+Clear all Stash
+git stash clear
+
+Apply First Stash
+git stash apply stash(0)
+
+Clear first Stash
+git stash pop 
