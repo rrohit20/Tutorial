@@ -1,0 +1,11 @@
+Q Web API request is responded then how can we make this request alive
+
+Q. If Timeout error is coming due to process time then how can we 
+manage it for client response
+
+Q What is dependency injection. How many ways we can pass parameter
+Q. What are two ways to make LINQ query optimized. Lazy loading in LINQ
+Q Why Singleton if Static Class is doing same
+While a static class allows only static methods and you cannot pass static class as parameter. A Singleton can implement interfaces, inherit from other classes and allow inheritance. While a static class cannot inherit their instance members. So Singleton is more flexible than static classes and can maintain state.
+Singleton patterns are used in logging, caches, thread pools, configuration settings, device driver objects.
+
