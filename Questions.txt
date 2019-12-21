@@ -9,3 +9,133 @@ Q Why Singleton if Static Class is doing same
 While a static class allows only static methods and you cannot pass static class as parameter. A Singleton can implement interfaces, inherit from other classes and allow inheritance. While a static class cannot inherit their instance members. So Singleton is more flexible than static classes and can maintain state.
 Singleton patterns are used in logging, caches, thread pools, configuration settings, device driver objects.
 
+------------------
+Preparation:
+
+WEB API/REST/MVC
+C#
+SQL 2012 AND HIGHER
+OOPS
+DESIGN PAATERN
+CONCURRENCY PATTERN
+WEB API
+azure cache, azure storage api, azure api gateway,
+azure event hub, azure data factory
+
+
+Delegate,multicast delegate, event, anonymous method
+Sync, Async
+
+Partial View
+model popup at runtime
+<script type="text/jscript">  
+$('#partialView').load('/shared/PartialViewExample’);  
+</script> 
+
+
+Routing(Web.Config)
+system.web.httpModules section
+system.web.httpHandlers section
+system.webserver.modules section
+system.webserver.handlers section
+
+
+result.skip((pagenumber-1)* pagesize).Take(pagesize)
+eager-->Dataloadoptions, Projection
+cache
+4th record using lamda expression
+
+Recursion: Use Folder Structure
+Basic: Constructor in abstract class (private,public,protected)
+call a abstract method from abstract class
+int, int32: same
+1. enum test: int  --int32 is now allowed here
+{xxx = 1}
+2. using System; 
+is required for int32 and not for int
+int32 i=10
+
+how to reverse the word
+var and dynamic, 
+extension method
+
+mvc: how many ways action to action call
+if db is updated then how can you update cache in c#
+by using SqlCacheDependency
+
+1. Entity Framework, 
+Code First, Model First, Database First
+Handle Model Changes
+Seed Database with test data
+Stored Procedure
+Entity Splitting
+Table Splitting
+Conditional Mapping
+Self referencing association
+TPH(Table Per Hierarchy)
+TPT(Table Per Type)
+
+2. LINQ
+Extension Method
+Aggregate
+Projection Operator(Select/SelectMany)
+Partitioning Operator
+Paging
+Conversation Operator
+GroupBy
+Group Join
+Inner Join
+
+3. Web API
+Content Negotiation
+FromBody & FromURI
+Call API from JQuery
+Cross Domain (JsonP & CORS)
+Basic Authontication
+Token Authontication
+Fiddler/Postman
+IHttpActionResult vs HttpResponseMessage
+
+4. MVC
+ViewData,ViewBag,TempData
+updatemodel and tryupdatemodel
+Including and excluding properties
+Delete Database using get / Post
+How does a controller find a view in mvc
+HTML helper
+Detect errors in views at compile time
+ Partial views
+cross site scripting attack
+ViewStart in asp.net mvc
+Paging
+Action Selector
+NonAction 
+Action Filter
+Authorize and AllowAnonymous action filters
+childactiononly attribute
+HandleError attribute
+OutputCache attribute
+CacheProfiles
+RequireHttps attribute
+ValidateInput attribute
+Custom action filters
+types of ActionResult
+Enable client side validation in asp.net mvc
+What is Unobtrusive JavaScript
+Ajax with asp.net mvc
+
+5. SQL
+Normalization
+Cluster/Non Cluster Index
+
+4. Error Handling
+5. Authontication
+6. Cache
+7. Unit Testing/Integration Testing
+
+Prototype,
+
+SQL Script
+Custom Error Handling
+Restful API, JSon structure
+
