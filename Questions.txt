@@ -1,3 +1,37 @@
+Basic:
+Generic, Generic Constraint, Generic Collection
+IEnumerable, IEnumerator, IQueryable
+Anonymous Method
+Anonymous Types and Tuples
+Action, Predicate, Func
+Covariance, Contravariance
+Ref and Out Keyword
+Yield Keyword
+Reflection, Dynamic and Var
+
+Garbage Collection, Finalize Dispose pattern
+.Net Data Types
+TypeSafe Casting, Explicit Casting, Implicit Cating
+Immutable, Mutable
+Sync, Async, Delegate, Multicast Delegate, Event
+Async and Await
+Stack, Heap, Value Type and Reference Types
+Boxing and Unboxing
+Is and As Keyword
+Serialization and Deserialization
+Early Binding, Late Binding
+C# Indexer
+
+
+OOPS
+Interface and Abstraction
+Abstract Class
+Shadowing
+Static Keyword
+Partial class
+
+
+
 Q Web API request is responded then how can we make this request alive
 
 Q. If Timeout error is coming due to process time then how can we 
