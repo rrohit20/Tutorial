@@ -1,0 +1,26 @@
+Filter:
+
+1. IAuthonticationFilter
+	OnAuthontication
+	OnAuthonticationChallange
+2. IAuthorizationFilter
+	OnAuthorization
+3. IActionFilter
+	OnActionExecuting
+	OnActionExecuted
+4. IExceptionFilter
+	OnException
+5. IResultFilter
+	OnResultExecuting
+	OnResultExecuted
+
+----------------------------------------------------------------
+
+State Management Technic:
+1. Hidden Field
+2. Cookies
+3. Query Sstring
+4. ViewData
+5. ViewBag
+6. TempData
+
