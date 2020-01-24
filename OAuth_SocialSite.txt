@@ -1,0 +1,10 @@
+1. Right Click project--> Press F4--> Update SSL Enable to True
+2. Copy the Https URL
+3. Right Click Project-->Property-->Web-->Paste Https URL in Project URL
+4. developers.facebook.com-->register and login-->will get Add a new App
+5. Select Website-->Type our Application Name
+6. Create New facebook App ID
+7. Type Email and Select Category-->Create App ID
+8. Type the App Https URL in Site URL-->Next-->Skip to Developer Dashboard
+9. Copy App ID and App Secret, and paste in our Application Startup.auth file 
+
