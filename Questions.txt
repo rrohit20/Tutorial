@@ -1,4 +1,16 @@
 Basic:
+MSIL, CTS,CLS,CLR,JIT, Garbage Collection, IDisposable
+CAS, Sandboxing, AppDomain
+Stack and Heap Memory, Value Type and Reference Type
+Boxing and Unboxing
+.Net Data Types
+TypeSafe Casting, Explicit Casting, Implicit Cating
+Immutable, Mutable
+Early Binding, Late Binding
+Serialization and Deserialization
+Is and As Keyword
+C# Indexer
+
 Generic, Generic Constraint, Generic Collection
 IEnumerable, IEnumerator, IQueryable
 Anonymous Method
@@ -9,19 +21,10 @@ Ref and Out Keyword
 Yield Keyword
 Reflection, Dynamic and Var
 
-Garbage Collection, Finalize Dispose pattern
-.Net Data Types
-TypeSafe Casting, Explicit Casting, Implicit Cating
-Immutable, Mutable
 Sync, Async, Delegate, Multicast Delegate, Event
 Async and Await
-Stack, Heap, Value Type and Reference Types
-Boxing and Unboxing
-Is and As Keyword
-Serialization and Deserialization
-Early Binding, Late Binding
-C# Indexer
 
+Association, Aggregation, Composition
 
 OOPS
 Interface and Abstraction
@@ -30,7 +33,9 @@ Shadowing
 Static Keyword
 Partial class
 
-
+Q Why Delete by Post not get
+Get Action delete can be called by Image or search which
+is bad
 
 Q Web API request is responded then how can we make this request alive
 

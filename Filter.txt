@@ -23,4 +23,16 @@ State Management Technic:
 4. ViewData
 5. ViewBag
 6. TempData
+-----------------
 
+The Life of a request
+BeginRequest
+AuthonticateRequest
+AuthorizeRequest
+ResolveRequestCache
+MapRequestHandler
+AcquireRequestState
+RequestHandlerExecute
+UpdateRequestCache
+LogRequest
+EndRequest
