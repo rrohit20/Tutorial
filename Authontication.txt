@@ -1,0 +1,10 @@
+console.developers.google.com
+create a new project(Project1)
+Click on credential
+click on OAuth Consent screen
+Write down the product name shown to user(Project1)
+Credential-->Create Credential-->Select OAuth Client ID--> Web Application
+Write the project URL(http://localhost:62392) in Authorized JavaScript Origin and Authorized redirect URI
+http://localhost:62392/sign-google)
+Click on create (will get Client ID and Client Secret)
+Click on Library--> google+API --> Enable

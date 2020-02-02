@@ -1,0 +1,413 @@
+using System;
+using System.Data.Entity;
+
+namespace MvcMovie.Models
+{
+    public class Movie
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public DateTime ReleaseDate { get; set; }
+        public string Genre { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    public class MovieDBContext : DbContext
+    {
+        public DbSet<Movie> Movies { get; set; }
+    }
+}
+
+-------------------------
+<add name="MovieDBContext" 
+   connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=aspnet-MvcMovie;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\Movies.mdf" 
+   providerName="System.Data.SqlClient" 
+/>
+ <add name="MovieDBContext"
+   connectionString="Data Source=ALIPL0666;Integrated Security=True;Initial Catalog=aspnet-MvcMovie;"
+   providerName="System.Data.SqlClient"
+/>
+----------------
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+
+namespace MvcMovie.Models
+{
+    public class Movie
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+
+        [Display(Name = "Release Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime ReleaseDate { get; set; }
+        public string Genre { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    public class MovieDBContext : DbContext
+    {
+        public DbSet<Movie> Movies { get; set; }
+    }
+}
+
+----------------------------------
+[Display(Name = "Release Date")]
+[DataType(DataType.Date)]
+[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+public DateTime ReleaseDate { get; set; }
+----------------------
+Globalization Code:
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/globalize/globalize.js"></script>
+<script src="~/Scripts/globalize/cultures/globalize.culture.@(System.Threading.Thread.CurrentThread.CurrentCulture.Name).js"></script>
+<script>
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) ||
+            !isNaN(Globalize.parseFloat(value));
+    }
+    $(document).ready(function () {
+        Globalize.culture('@(System.Threading.Thread.CurrentThread.CurrentCulture.Name)');
+    });
+</script>
+<script>
+    jQuery.extend(jQuery.validator.methods, {
+        range: function (value, element, param) {
+            //Use the Globalization plugin to parse the value
+            var val = Globalize.parseFloat(value);
+            return this.optional(element) || (
+                val >= param[0] && val <= param[1]);
+        }
+    });
+    $.validator.methods.date = function (value, element) {
+        return this.optional(element) ||
+            Globalize.parseDate(value) ||
+            Globalize.parseDate(value, "yyyy-MM-dd");
+    }
+</script>
+}
+To avoid repeating this code in every Edit view, you can move it to the layout file.
+
+Web.Config:
+<system.web>
+    <globalization culture ="en-US" />
+    <!--elements removed for clarity-->
+  </system.web>
+--------------------------------
+Search Functionality
+public ActionResult Index(string searchString) 
+{           
+    var movies = from m in db.Movies 
+                 select m; 
+ 
+    if (!String.IsNullOrEmpty(searchString)) 
+    { 
+        movies = movies.Where(s => s.Title.Contains(searchString)); 
+    } 
+ 
+    return View(movies); 
+}
+/////Index View
+@model IEnumerable<MvcMovie.Models.Movie> 
+ 
+@{ 
+    ViewBag.Title = "Index"; 
+} 
+ 
+<h2>Index</h2> 
+ 
+<p> 
+    @Html.ActionLink("Create New", "Create") 
+     
+     @using (Html.BeginForm()){    
+         <p> Title: @Html.TextBox("SearchString") <br />   
+         <input type="submit" value="Filter" /></p> 
+        } 
+</p>
+
+--------------------------------
+Enable-Migrations -ContextTypeName MvcMovie.Models.MovieDBContext
+--------------
+replace seed method with 
+protected override void Seed(MvcMovie.Models.MovieDBContext context)
+{
+    context.Movies.AddOrUpdate( i => i.Title,
+        new Movie
+        {
+            Title = "When Harry Met Sally",
+            ReleaseDate = DateTime.Parse("1989-1-11"),
+            Genre = "Romantic Comedy",
+            Price = 7.99M
+        },
+
+         new Movie
+         {
+             Title = "Ghostbusters ",
+             ReleaseDate = DateTime.Parse("1984-3-13"),
+             Genre = "Comedy",
+             Price = 8.99M
+         },
+
+         new Movie
+         {
+             Title = "Ghostbusters 2",
+             ReleaseDate = DateTime.Parse("1986-2-23"),
+             Genre = "Comedy",
+             Price = 9.99M
+         },
+
+       new Movie
+       {
+           Title = "Rio Bravo",
+           ReleaseDate = DateTime.Parse("1959-4-15"),
+           Genre = "Western",
+           Price = 3.99M
+       }
+   );
+   
+}
+-------------------
+add-migration Initial
+Code First Migrations creates another class file in the Migrations folder (with the name {DateStamp}_Initial.cs ), and this class contains 
+code that creates the database schema
+-------------------
+update-database
+In the Package Manager Console, enter the command update-database to create the database and run the Seed method.
+If you get an error that indicates a table already exists and can't be created, it is probably because you ran the application after you 
+deleted the database and before you executed update-database. In that case, delete the Movies.mdf file again and retry the update-database 
+command. If you still get an error, delete the migrations folder and contents then start with the instructions at the top of this page 
+(that is delete the Movies.mdf file then proceed to Enable-Migrations). If you still get an error, open SQL Server Object Explorer and 
+remove the database from the list.
+---------------------------
+Adding a Rating Property to the Movie Model
+public string Rating { get; set; }
+[Bind(Include = "ID,Title,ReleaseDate,Genre,Price,Rating")]
+<th>
+    @Html.DisplayNameFor(model => model.Rating)
+</th>
+<td>
+    @Html.DisplayFor(modelItem => item.Rating)
+</td>		
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Rating, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+Code First Approach to updatee the schema
+Use Code First Migrations to update the database schema
+Update the Seed method so that it provides a value for the new column. Open Migrations\Configuration.cs file and add a Rating field to each
+Movie object.
+Build the solution, and then open the Package Manager Console window and enter the following command:
+
+add-migration Rating
+
+When this command finishes, Visual Studio opens the class file that defines the new DbMigration derived class, and in the Up method you 
+can see the code that creates the new column.
+public partial class AddRatingMig : DbMigration
+{
+    public override void Up()
+    {
+        AddColumn("dbo.Movies", "Rating", c => c.String());
+    }
+    
+    public override void Down()
+    {
+        DropColumn("dbo.Movies", "Rating");
+    }
+}
+Build the solution, and then enter the update-database command in the Package Manager Console window.
+update-database
+-----------------------------------------------
+Validation:
+public class Movie
+{
+    public int ID { get; set; }
+
+    [StringLength(60, MinimumLength = 3)]
+    public string Title { get; set; }
+
+    [Display(Name = "Release Date")]
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+    public DateTime ReleaseDate { get; set; }
+  
+    [RegularExpression(@"^[A-Z]+[a-zA-Z'\s]*$")]
+    [Required]
+    [StringLength(30)]
+    public string Genre { get; set; }
+
+    [Range(1, 100)]
+    [DataType(DataType.Currency)]
+    public decimal Price { get; set; }
+
+    [RegularExpression(@"^[A-Z]+[a-zA-Z'\s]*$")]
+    [StringLength(5)]
+    public string Rating { get; set; }
+}
+
+add-migration DataAnnotations
+update-database
+
+public override void Up()
+{
+    AlterColumn("dbo.Movies", "Title", c => c.String(maxLength: 60));
+    AlterColumn("dbo.Movies", "Genre", c => c.String(nullable: false, maxLength: 30));
+    AlterColumn("dbo.Movies", "Rating", c => c.String(maxLength: 5));
+}
+
+------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+Models:
+--------
+Course to Enrollment : 1 to many
+Student to Enrollment: 1 to many
+--------
+using System;
+using System.Collections.Generic;
+
+namespace ContosoUniversity.Models
+{
+    public class Student
+    {
+        public int ID { get; set; }
+        public string LastName { get; set; }
+        public string FirstMidName { get; set; }
+        public DateTime EnrollmentDate { get; set; }
+        
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+    }
+}
+---------------
+namespace ContosoUniversity.Models
+{
+    public enum Grade
+    {
+        A, B, C, D, F
+    }
+
+    public class Enrollment
+    {
+        public int EnrollmentID { get; set; }
+        public int CourseID { get; set; }
+        public int StudentID { get; set; }
+        public Grade? Grade { get; set; }
+        
+        public virtual Course Course { get; set; }
+        public virtual Student Student { get; set; }
+    }
+}
+------------------
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ContosoUniversity.Models
+{
+    public class Course
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CourseID { get; set; }
+        public string Title { get; set; }
+        public int Credits { get; set; }
+        
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
+    }
+}
+--------------------
+Install-Package EntityFramework
+-----------------------
+Create a new Folder DAL and add a file
+using PracticeMVC_University.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
+using System.Web;
+
+namespace PracticeMVC_University.DAL
+{
+    public class SchoolContext : DbContext
+    {
+
+        public SchoolContext() : base("SchoolContext")
+        {
+        }
+
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Course> Courses { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+    }
+}
+The modelBuilder.Conventions.Remove statement in the OnModelCreating method prevents table names from being pluralized. If you didn't do this,
+the generated tables in the database would be named Students, Courses, and Enrollments. Instead, the table names will be Student, Course, and 
+Enrollment
+-------------------------------
+public class SchoolInitializer : System.Data.Entity. DropCreateDatabaseIfModelChanges<SchoolContext>
+    {
+        protected override void Seed(SchoolContext context)
+        {
+            var students = new List<Student>
+            {
+            new Student{FirstMidName="Carson",LastName="Alexander",EnrollmentDate=DateTime.Parse("2005-09-01")},
+            new Student{FirstMidName="Meredith",LastName="Alonso",EnrollmentDate=DateTime.Parse("2002-09-01")},
+            new Student{FirstMidName="Arturo",LastName="Anand",EnrollmentDate=DateTime.Parse("2003-09-01")},
+            new Student{FirstMidName="Gytis",LastName="Barzdukas",EnrollmentDate=DateTime.Parse("2002-09-01")},
+            new Student{FirstMidName="Yan",LastName="Li",EnrollmentDate=DateTime.Parse("2002-09-01")},
+            new Student{FirstMidName="Peggy",LastName="Justice",EnrollmentDate=DateTime.Parse("2001-09-01")},
+            new Student{FirstMidName="Laura",LastName="Norman",EnrollmentDate=DateTime.Parse("2003-09-01")},
+            new Student{FirstMidName="Nino",LastName="Olivetto",EnrollmentDate=DateTime.Parse("2005-09-01")}
+            };
+
+            students.ForEach(s => context.Students.Add(s));
+            context.SaveChanges();
+            var courses = new List<Course>
+            {
+            new Course{CourseID=1050,Title="Chemistry",Credits=3,},
+            new Course{CourseID=4022,Title="Microeconomics",Credits=3,},
+            new Course{CourseID=4041,Title="Macroeconomics",Credits=3,},
+            new Course{CourseID=1045,Title="Calculus",Credits=4,},
+            new Course{CourseID=3141,Title="Trigonometry",Credits=4,},
+            new Course{CourseID=2021,Title="Composition",Credits=3,},
+            new Course{CourseID=2042,Title="Literature",Credits=4,}
+            };
+            courses.ForEach(s => context.Courses.Add(s));
+            context.SaveChanges();
+            var enrollments = new List<Enrollment>
+            {
+            new Enrollment{StudentID=1,CourseID=1050,Grade=Grade.A},
+            new Enrollment{StudentID=1,CourseID=4022,Grade=Grade.C},
+            new Enrollment{StudentID=1,CourseID=4041,Grade=Grade.B},
+            new Enrollment{StudentID=2,CourseID=1045,Grade=Grade.B},
+            new Enrollment{StudentID=2,CourseID=3141,Grade=Grade.F},
+            new Enrollment{StudentID=2,CourseID=2021,Grade=Grade.F},
+            new Enrollment{StudentID=3,CourseID=1050},
+            new Enrollment{StudentID=4,CourseID=1050,},
+            new Enrollment{StudentID=4,CourseID=4022,Grade=Grade.F},
+            new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
+            new Enrollment{StudentID=6,CourseID=1045},
+            new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
+            };
+            enrollments.ForEach(s => context.Enrollments.Add(s));
+            context.SaveChanges();
+        }
+    }
+-----------------
+<contexts>
+    <context type="ContosoUniversity.DAL.SchoolContext, ContosoUniversity">
+      <databaseInitializer type="ContosoUniversity.DAL.SchoolInitializer, ContosoUniversity" />
+    </context>
+ </contexts>	

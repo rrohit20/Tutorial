@@ -1,0 +1,41 @@
+---------------------------------------------
+1. Create the Project Template in VS 
+---------------------------------------------------
+Project-->ExportTemplate-->Select Project-->Click Next
+Template Name: WebApplication1
+Output Location: C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates\WebApplication1.zip
+
+//Above step create zip file in below location 
+C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+Search in the new project and we can get our Project Name in the template.
+--------------------------------------------------------------------------------------------------
+
+2. Create the Project Solution in VS
+---------------------------------
+Follow the first step for test project as well
+Project-->ExportTemplate-->Select Project-->Click Next
+Template Name: WebApplication1.Tests
+Output Location: C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates\WebApplication1.Tests.zip
+
+//Above step create zip file in below location 
+C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+Delete the file WebApplication1.zip and WebApplication1.Tests.zip
+from C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+Extract (WebApplication1.zip and WebApplication1.Tests.zip) file in C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+
+Copy file MyTemplate.VSIX and __TemplateIcon.ico from 
+C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates\WebApplication1 and 
+paste C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+
+Delete WebApplication1.zip and WebApplication1.Tests.zip file now
+
+Varify MyTemplate.VSIX project details from C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+
+Create a zip file (Project folder, icon file and VSIX file) from C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates and give your name for solution project. Now copy the zip file and 
+paste in C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
