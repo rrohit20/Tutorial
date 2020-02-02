@@ -1,2 +1,6 @@
+Package Manager console run below code
+
 enable-migrations
-add-migration "Initial Model"
+add-migration InitialsModel
+add-migration InitialsModel -force
+update-database

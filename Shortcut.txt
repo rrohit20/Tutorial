@@ -1,0 +1,8 @@
+prop + tab + tab
+propfull + tab + tab
+
+mvcaction4+tab+tab for creating action
+
+Create Shortcut for Package Manager Console (Alt + .)
+Tools-->Options-->Environment-->Keyboard-->Type packagemanagerconsole in the comment containing textbox--> Type Alt + /, Alt + . (Hold Alt and Press /.)
+
