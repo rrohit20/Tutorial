@@ -2,5 +2,10 @@ Package Manager console run below code
 
 enable-migrations
 add-migration InitialsModel
-add-migration InitialsModel -force
 update-database
+add-migration InitialsModel -force
+
+Get the SQL script when updating database 
+update-database -verbose
+
+1. Add Model
