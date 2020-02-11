@@ -9,3 +9,10 @@ Get the SQL script when updating database
 update-database -verbose
 
 1. Add Model
+
+
+MVC.Entity Class Library
+1. Add Entity Framework
+2. Add Microsft.AspNet.Identity.Owin
+3. Add AspNet.identity.entity
+4. Add AspNet.mvc
