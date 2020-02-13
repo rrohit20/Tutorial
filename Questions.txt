@@ -33,6 +33,12 @@ Shadowing
 Static Keyword
 Partial class
 
+Q Rest and Rest Web API difference
+Q Stack and Heap Memory: How it looks like
+Q XSLT
+Q. System.int32 and int 16
+Q IIS Request Cycle
+Q 
 Q Why Delete by Post not get
 Get Action delete can be called by Image or search which
 is bad

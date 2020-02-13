@@ -1,0 +1,980 @@
+--------------------------
+1. Create MVC Project Practice.Web with authontication option
+2. Update Connection String in web.config
+    <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=PracticeDb;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+3. Open Console npm--> enable-migrations
+4. add-migration InitialModel
+5. update-database
+----------------------------------------------------
+ASP.NET MVC - Creating Solutions with Separate Projects for Entities, Data Access, and Website Functionality
+---------------------------------------------------
+1. Create MVC Project Practice.Web
+2. Create the Practice.Entities Empty Web Project with Test Project.
+3. Repeate step 2 for Practice.Data and Practice.Common
+4. Delete the following folders from Practice.Web
+	App_Data
+	Models
+5. Install EntityFramework for Data and Web Project 6.4.0
+6. Install Microsoft.AspNet.Mvc for Data,Entities,Web
+7. Right-click on the Practice.Entities project.
+	Select Add / New Folder from the context menu.
+	Name the folder "Customers".
+8. Repeat the process for the following folders:
+	Customer.ViewModels
+	Geographies
+9. Right-click on the Customer Folder.
+	Select Add... / Class... from the context menu.
+	Name the class "Customer".
+10. Customer.cs
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Practice.Entities.Geographies;
+using Practice.Entities.Orders;
+
+namespace Practice.Entities.Customers
+{
+    public class Customer
+    {
+        public Customer()
+        {
+            Orders = new HashSet<Order>();
+        }
+
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid CustomerID { get; set; }
+
+        [Required]
+        [MaxLength(128)]
+        public string CustomerName { get; set; }
+
+        [Required]
+        [MaxLength(3)]
+        public string CountryIso3 { get; set; }
+
+        [MaxLength(3)]
+        public string RegionCode { get; set; }
+
+        public virtual Country Country { get; set; }
+
+        public virtual Region Region { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
+    }
+}
+11. Add CustomerDisplayViewModel.cs in Customer.ViewModel
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Practice.Entities.Customers.ViewModels
+{
+    public class CustomerDisplayViewModel
+    {
+        [Display(Name = "Customer Number")]
+        public Guid CustomerID { get; set; }
+
+        [Display(Name = "Customer Name")]
+        public string CustomerName { get; set; }
+
+        [Display(Name = "Country")]
+        public string CountryName { get; set; }
+
+        [Display(Name = "State / Province / Region")]
+        public string RegionName { get; set; }
+    }
+}
+12. Add CustomerEditViewModel.cs in Customer.ViewModel
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
+namespace Practice.Entities.Customers.ViewModels
+{
+    public class CustomerEditViewModel
+    {
+        [Display(Name = "Customer Number")]
+        public string CustomerID { get; set; }
+
+        [Required]
+        [Display(Name = "Customer Name")]
+        [StringLength(75)]
+        public string CustomerName { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
+        public string SelectedCountryIso3 { get; set; }
+        public IEnumerable<SelectListItem> Countries { get; set; }
+
+        [Required]
+        [Display(Name = "State / Region")]
+        public string SelectedRegionCode { get; set; }
+        public IEnumerable<SelectListItem> Regions { get; set; }
+    }
+}
+13. Add Country.cs in Geographies
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace Practice.Entities.Geographies
+{
+    public class Country
+    {
+        [Key]
+        [MaxLength(3)]
+        public string Iso3 { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string CountryNameEnglish { get; set; }
+
+        public virtual IEnumerable<Region> Regions { get; set; }
+    }
+}
+14. Add Region.cs in Geographies
+using System.ComponentModel.DataAnnotations;
+
+namespace Practice.Entities.Geographies
+{
+    public class Region
+    {
+        [Key]
+        [MaxLength(3)]
+        public string RegionCode { get; set; }
+
+        [Required]
+        [MaxLength(3)]
+        public string Iso3 { get; set; }
+
+        [Required]
+        public string RegionNameEnglish { get; set; }
+
+        public virtual Country Country { get; set; }
+    }
+}
+15. Add Item.cs in Items
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Practice.Entities.Orders;
+
+namespace Practice.Entities.Items
+{
+    public class Item
+    {
+        public Item()
+        {
+            Orders = new HashSet<Order>();
+        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid ItemID { get; set; }
+
+        [Required]
+        [MaxLength(128)]
+        public String Description { get; set; }
+
+        public int ReorderQuantity { get; set; }
+
+        public decimal MSRP { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
+    }
+}
+
+16. Add Order.cs in Orders
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Practice.Entities.Customers;
+using Practice.Entities.Items;
+
+namespace Practice.Entities.Orders
+{
+    public class Order
+    {
+        public Order()
+        {
+            Items = new HashSet<Item>();
+        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid OrderID { get; set; }
+
+        [Required]
+        public Guid CustomerID { get; set; }
+
+        [Required]
+        public DateTime OrderDate { get; set; }
+
+        [Required]
+        [MaxLength(128)]
+        public string Description { get; set; }
+
+        public ICollection<Item> Items { get; set; }
+
+        public virtual Customer Customer { get; set; }
+    }
+}
+
+17. Add OrderItem.cs in Orders
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Practice.Entities.Items;
+
+namespace Practice.Entities.Orders
+{
+    public class OrderItem
+    {
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual Guid ItemID { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public virtual Guid OrderID { get; set; }
+
+        public decimal Price { get; set; }
+
+        public short Quantity { get; set; }
+
+        public virtual Order Order { get; set; }
+
+        public virtual Item Item { get; set; }
+    }
+}
+
+18. Add CustomerOrdersListViewModel.cs in Orders.ViewModels
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace Practice.Entities.Orders.ViewModels
+{
+    public class CustomerOrdersListViewModel
+    {
+        [Display(Name = "Customer Number")]
+        public Guid CustomerID { get; set; }
+
+        [Display(Name = "Customer Name")]
+        public string CustomerName { get; set; }
+
+        [Display(Name = "Country")]
+        public string CountryNameEnglish { get; set; }
+
+        [Display(Name = "Region")]
+        public string RegionNameEnglish { get; set; }
+
+        public List<OrderDisplayViewModel> Orders { get; set; }
+    }
+}
+
+19. Add OrderDisplayViewModel.cs in Orders.ViewModels
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Practice.Entities.Orders.ViewModels
+{
+    public class OrderDisplayViewModel
+    {
+        public Guid CustomerID { get; set; }
+
+        [Display(Name = "Order Number")]
+        public Guid OrderID { get; set; }
+
+        [Display(Name = "Order Date")]
+        public DateTime OrderDate { get; set; }
+
+        [Display(Name = "PO / Description")]
+        public string Description { get; set; }
+    }
+}
+20. Take the Practice.Data and Practice.Entities reference
+in Practice.Web project
+21. Add below folder in Practice.data
+	Context, Customer, Geographies, Orders
+22. Add Context.cs in Context
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using Practice.Entities.Customers;
+using Practice.Entities.Geographies;
+using Practice.Entities.Items;
+using Practice.Entities.Orders;
+
+namespace Practice.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext() : base("ApplicationDbContext")
+        {
+
+        }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+        }
+    }
+}
+
+23. Add CustomersRepository.cs in Customer
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using Practice.Entities.Customers;
+using Practice.Entities.Customers.ViewModels;
+
+namespace Practice.Data
+{
+    public class CustomersRepository
+    {
+        public Customer GetCustomer(Guid customerid)
+        {
+            if (customerid != Guid.Empty)
+            { 
+                using (var context = new ApplicationDbContext())
+                {
+                    var customer = context.Customers.AsNoTracking()
+                        .Where(x => x.CustomerID == customerid)
+                        .Single();
+                    return customer;
+                }
+            }
+            return null;
+        }
+
+        public List<CustomerDisplayViewModel> GetCustomers()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                List<Customer> customers = new List<Customer>();
+                customers = context.Customers.AsNoTracking()
+                    .Include(x => x.Country)
+                    .Include(x => x.Region)
+                    .ToList();
+
+                if (customers != null)
+                {
+                    List<CustomerDisplayViewModel> customersDisplay = new List<CustomerDisplayViewModel>();
+                    foreach (var x in customers)
+                    {
+                        var customerDisplay = new CustomerDisplayViewModel()
+                        {
+                            CustomerID = x.CustomerID,
+                            CustomerName = x.CustomerName,
+                            CountryName = x.Country.CountryNameEnglish,
+                            RegionName = x.Region.RegionNameEnglish
+                        };
+                        customersDisplay.Add(customerDisplay);
+                    }
+                    return customersDisplay;
+                }
+                return null;
+            }
+        }
+
+
+        public CustomerEditViewModel CreateCustomer()
+        {
+            var cRepo = new CountriesRepository();
+            var rRepo = new RegionsRepository();
+            var customer = new CustomerEditViewModel()
+            {
+                CustomerID = Guid.NewGuid().ToString(),
+                Countries = cRepo.GetCountries(),
+                Regions = rRepo.GetRegions()
+            };
+            return customer;
+        }
+
+        public bool SaveCustomer(CustomerEditViewModel customeredit)
+        {
+            if (customeredit != null)
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    if (Guid.TryParse(customeredit.CustomerID, out Guid newGuid))
+                    {
+                        var customer = new Customer()
+                        {
+                            CustomerID = newGuid,
+                            CustomerName = customeredit.CustomerName,
+                            CountryIso3 = customeredit.SelectedCountryIso3,
+                            RegionCode = customeredit.SelectedRegionCode
+                        };
+                        customer.Country = context.Countries.Find(customeredit.SelectedCountryIso3);
+                        customer.Region = context.Regions.Find(customeredit.SelectedRegionCode);
+
+                        context.Customers.Add(customer);
+                        context.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            // Return false if customeredit == null or CustomerID is not a guid
+            return false;
+        }
+    }
+}
+
+24. Add CountriesRepository.cs in Geographies
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+
+namespace Practice.Data
+{
+    public class CountriesRepository
+    {
+        public IEnumerable<SelectListItem> GetCountries()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                List<SelectListItem> countries = context.Countries.AsNoTracking()
+                    .OrderBy(n => n.CountryNameEnglish)
+                        .Select(n =>
+                        new SelectListItem
+                        {
+                            Value = n.Iso3.ToString(),
+                            Text = n.CountryNameEnglish
+                        }).ToList();
+                var countrytip = new SelectListItem()
+                {
+                    Value = null,
+                    Text = "--- select country ---"
+                };
+                countries.Insert(0, countrytip);
+                return new SelectList(countries, "Value", "Text");
+            }
+        }
+    }
+}
+25. Add RegionsRepository.cs in Geographies
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+
+namespace Practice.Data
+{
+    public class RegionsRepository
+    {
+        public IEnumerable<SelectListItem> GetRegions()
+        {
+            List<SelectListItem> regions = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Value = null,
+                    Text = " "
+                }
+            };
+            return regions;
+        }
+
+        public IEnumerable<SelectListItem> GetRegions(string iso3)
+        {
+            if (!String.IsNullOrWhiteSpace(iso3))
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    IEnumerable<SelectListItem> regions = context.Regions.AsNoTracking()
+                        .OrderBy(n => n.RegionNameEnglish)
+                        .Where(n => n.Iso3 == iso3)
+                        .Select(n =>
+                           new SelectListItem
+                           {
+                               Value = n.RegionCode,
+                               Text = n.RegionNameEnglish
+                           }).ToList();
+                    return new SelectList(regions, "Value", "Text");
+                }
+            }
+            return null;
+        }
+    }
+}
+
+26. Add OrdersRepository.cs in Orders
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Practice.Entities.Orders.ViewModels;
+
+namespace Practice.Data.Orders
+{
+    public class OrdersRepository
+    {
+        public CustomerOrdersListViewModel GetCustomerOrdersDisplay(Guid customerid)
+        {
+            if (customerid != null && customerid != Guid.Empty)
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    var customerRepo = new CustomersRepository();
+                    var customer = customerRepo.GetCustomer(customerid);
+                    if (customer != null)
+                    {
+                        var customerOrdersListVm = new CustomerOrdersListViewModel()
+                        {
+                            CustomerID = customer.CustomerID,
+                            CustomerName = customer.CustomerName,
+                            CountryNameEnglish = context.Countries.Find(customer.CountryIso3).CountryNameEnglish,
+                            RegionNameEnglish = context.Regions.Find(customer.RegionCode).RegionNameEnglish
+                        };
+
+                        List<OrderDisplayViewModel> orderList = context.Orders.AsNoTracking()
+                            .Where(x => x.CustomerID == customerid)
+                            .OrderBy(x => x.OrderDate)
+                            .Select( x => 
+                            new OrderDisplayViewModel
+                            {
+                                CustomerID = x.CustomerID,
+                                OrderID = x.OrderID,
+                                OrderDate = x.OrderDate,
+                                Description = x.Description
+                            }).ToList();
+                        customerOrdersListVm.Orders = orderList;
+                        return customerOrdersListVm;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void SaveOrders(List<OrderDisplayViewModel> orders)
+        {
+            if (orders != null)
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    foreach (var order in orders)
+                    {
+                        var record = context.Orders.Find(order.OrderID);
+                        if (record != null)
+                        {
+                            record.Description = order.Description;
+                        }
+                    }
+                    context.SaveChanges();
+                }
+            }
+        }
+    }
+}
+27. Add Reference Practice.Entities in Practice.data
+28. Update Connection String in web.config
+  <connectionStrings>
+    <add name="ApplicationDbContext" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=PracticeDb;Integrated Security=True"
+  providerName="System.Data.SqlClient" />
+  </connectionStrings>
+29. Add below controller in Practice.Web
+	CustomerController,OrderController
+30. CustomerController.cs
+using System.Collections.Generic;
+using System.Web.Mvc;
+using Practice.Data;
+using Practice.Entities.Customers.ViewModels;
+
+namespace Practice.Web.Controllers
+{
+    public class CustomerController : Controller
+    {
+        // GET: Customer
+        public ActionResult Index()
+        {
+            var repo = new CustomersRepository();
+            var customerList = repo.GetCustomers();
+            return View(customerList);
+        }
+
+        [HttpGet]
+        public ActionResult GetRegions(string iso3)
+        {
+            if (!string.IsNullOrWhiteSpace(iso3) && iso3.Length == 3)
+            {
+                var repo = new RegionsRepository();
+
+                IEnumerable<SelectListItem> regions = repo.GetRegions(iso3);
+                return Json(regions, JsonRequestBehavior.AllowGet);
+            }
+            return null;
+        }
+
+
+        // GET: Customer/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: Customer/Create
+        public ActionResult Create()
+        {
+            var repo = new CustomersRepository();
+            var customer = repo.CreateCustomer();
+            return View(customer);
+        }
+
+        // POST: Customer/Create
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "CustomerID, CustomerName, SelectedCountryIso3, SelectedRegionCode")] CustomerEditViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var repo = new CustomersRepository();
+                    bool saved = repo.SaveCustomer(model);
+                    if (saved)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Customer/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: Customer/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Customer/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: Customer/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+    }
+
+}
+31. OrderController.cs
+using System;
+using System.Net;
+using System.Web.Mvc;
+using Practice.Data.Orders;
+using Practice.Entities.Orders.ViewModels;
+
+namespace PracticeProjects.Controllers
+{
+    public class OrderController : Controller
+    {
+        // GET: Order
+        public ActionResult Index(string customerid)
+        {
+            if(!String.IsNullOrWhiteSpace(customerid))
+            {
+                if (Guid.TryParse(customerid, out Guid customerId))
+                {
+                    var repo = new OrdersRepository();
+                    var model = repo.GetCustomerOrdersDisplay(customerId);
+                    return View(model);
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(CustomerOrdersListViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Orders != null)
+                {
+                    var repo = new OrdersRepository();
+                    repo.SaveOrders(model.Orders);
+                }
+                return View(model);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+    }
+}
+32. Add Customer View: Create, Index
+	Create View
+@model Practice.Entities.Customers.ViewModels.CustomerEditViewModel
+
+@{
+    ViewBag.Title = "Customer";
+}
+<h2>Customer</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Create a new customer by entering the customer name, country, and region.</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @autofocus = "autofocus" } })
+                @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.SelectedCountryIso3, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(x => Model.SelectedCountryIso3, new SelectList(Model.Countries, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "Country" })
+                @Html.ValidationMessageFor(x => x.SelectedCountryIso3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.SelectedRegionCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(x => Model.SelectedRegionCode, new SelectList(Model.Regions, "Value", "Text"), htmlAttributes: new { @class = "form-control", @id = "Region" })
+                @Html.ValidationMessageFor(x => x.SelectedRegionCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+            $('#Country').change(function () {
+                var selectedCountry = $("#Country").val();
+                var regionsSelect = $('#Region');
+                regionsSelect.empty();
+                if (selectedCountry != null && selectedCountry != '') {
+                    $.getJSON('@Url.Action("GetRegions")', { iso3: selectedCountry }, function (regions) {
+                        if (regions != null && !jQuery.isEmptyObject(regions))
+                        {
+                            regionsSelect.append($('<option/>', {
+                                value: null,
+                                text: ""
+                            }));
+                            $.each(regions, function (index, region) {
+                                regionsSelect.append($('<option/>', {
+                                    value: region.Value,
+                                    text: region.Text
+                                }));
+                            });
+                        };
+                    });
+                }
+            });
+    </script>
+}
+
+-------
+Index View
+--------
+@model IEnumerable<Practice.Entities.Customers.ViewModels.CustomerDisplayViewModel>
+
+@{
+    ViewBag.Title = "Customer List";
+}
+
+<h2>Customer List</h2>
+<p>
+    To see the dropdown lists in action, click "Create New".
+</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach(var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CountryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegionName)
+        </td>
+        <td>
+            @Html.ActionLink("Orders", "Index", "Order",  new { customerid = item.CustomerID }, null) 
+            @*@Html.ActionLink("Details", "Details", new { id = item.CustomerID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CustomerID })*@
+        </td> 
+    </tr>
+}
+
+</table>
+
+
+33. Add Order View: Index
+@model Practice.Entities.Orders.ViewModels.CustomerOrdersListViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CountryNameEnglish, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CountryNameEnglish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegionNameEnglish, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RegionNameEnglish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders[0].OrderID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders[0].OrderDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Orders[0].Description)
+                        </th>
+                    </tr>
+                    @if (Model.Orders != null)
+                    {
+                        for (var i = 0; i < Model.Orders.Count(); i++)
+                        {
+                            <tr>
+                                @Html.HiddenFor(x => Model.Orders[i].CustomerID)
+                                <td>
+                                    @Html.TextBoxFor(x => Model.Orders[i].OrderID, new { @class = "form-control", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => Model.Orders[i].OrderDate, new { @class = "form-control", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(x => Model.Orders[i].Description, new { @class = "form-control" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                    @*<tr>
+                        <td>
+                            @Html.ActionLink("Add", "Edit", new { customerid = Model.CustomerID, orderid = Model.OrderID }, htmlAttributes: new { @class = "btn btn-success" })
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>*@
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-11">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
