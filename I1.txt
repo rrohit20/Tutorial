@@ -1,0 +1,506 @@
+14
+Cross Domain:
+Using JsonP
+Using CORS
+
+16 SSL
+17. HTTPS
+18. Basic Authontication
+19. Basic Authontication Using JQuery
+20.
+
+https://github.com/rrohit20/Tutorial.git
+https://github.com/rrohit20/Examples.git
+https://github.com/rrohit20/Projects.git
+https://github.com/rrohit20/Accionlabs.git
+
+Ninject,Autofac
+
+Out, in,
+---------------------------------------------
+1. Create the Project Template in VS 
+---------------------------------------------------
+Project-->ExportTemplate-->Select Project-->Click Next
+Template Name: WebApplication1
+Output Location: C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates\WebApplication1.zip
+
+//Above step create zip file in below location 
+C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+Search in the new project and we can get our Project Name in the template.
+--------------------------------------------------------------------------------------------------
+
+2. Create the Project Solution in VS
+---------------------------------
+Follow the first step for test project as well
+Project-->ExportTemplate-->Select Project-->Click Next
+Template Name: WebApplication1.Tests
+Output Location: C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates\WebApplication1.Tests.zip
+
+//Above step create zip file in below location 
+C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+Delete the file WebApplication1.zip and WebApplication1.Tests.zip
+from C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+Extract (WebApplication1.zip and WebApplication1.Tests.zip) file in C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+
+Copy file MyTemplate.VSIX and __TemplateIcon.ico from 
+C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates\WebApplication1 and 
+paste C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+
+Delete WebApplication1.zip and WebApplication1.Tests.zip file now
+
+Varify MyTemplate.VSIX project details from C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates
+
+Create a zip file (Project folder, icon file and VSIX file) from C:\Users\AL2045\Documents\Visual Studio 2017\My Exported Templates and give your name for solution project. Now copy the zip file and 
+paste in C:\Users\AL2045\Documents\Visual Studio 2017\Templates\ProjectTemplates
+
+
+---------------------------------------------------------------
+Angular2
+---------------------------------------------------------------
+Performance, Dependency Injection, Mobile Support, Component based development,
+more language choice: acma script 5 and 6,Dart, TypeScript,ECMA Script 6 officialy known as ACMA Script 2015
+
+Component: TemplateDefines User Interface,contains the Html, directives and data binding), Class, Decorator(add metadata to the class making it an angular component)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CONCURRENCY PATTERN
+azure cache, azure storage api, azure api gateway,
+azure event hub, azure data factory
+
+---------------------------------------------------------------
+Entity Framework
+--------------------------------------------------------------- 
+Code First, Model First, Database First
+Handle Model Changes
+
+Seed Database with test data
+1. Create a class and inherit dropcreatedatabaseifmodelchanges<employeedbcontext>
+2. Override Seed method (EmployeeDBContext context)
+
+using Stored Procedure with entity framework : 
+1. Create Class xyz and define override method
+override OnModelCreating(DbModelBuilder modelbuilder)
+modelbuilder.Entity<Employee>.MaptoStoredProcedure();
+2. Create Instance of class xyz and create Get/Update 
+3. List/Add/Update/Delete in xyz instance in Get/Update/Delete method
+
+modelbuilder.Entity<Employee>.MaptoStoredProcedure(
+p=> p.Insert(x=>x.HasName("InsertEmployee)));
+
+Entity Splitting -  1 entity devide multiple table
+Table Splitting - 1 Table devide Multiple Entity 
+Useful when we want to delay the loading of some properties with large data when using lazy loading
+Conditional Mapping:
+Used to apply permanent filter on the entity.example: if application need employee who are not terminated
+
+Self referencing association :
+Ex: Table- EmpID, EMPName, ManagerID 
+
+TPH(Table Per Hierarchy)
+Ex: Hourly and Monthly paid employee data in one table and devide into multiple table is TPH.
+
+TPT(Table Per Type)
+Reverse of TPH
+---------------------------------------------------------------
+MVC:
+---------------------------------------------------------------
+ViewData,ViewBag,TempData
+ViewData["YourData"] = "SomeData";
+ViewBag.YourData = "SomeData";
+
+Form
+updatemodel and tryupdatemodel
+Including and excluding properties
+Delete Database using get / Post
+How does a controller find a view in mvc
+HTML helper
+Detect errors in views at compile time
+Partial views
+-----
+model popup at runtime
+<script type="text/jscript">  
+$('#partialView').load('/shared/PartialViewExample’);  
+</script> 
+-----
+cross site scripting attack
+ViewStart in asp.net mvc
+Paging
+Named Section
+
+Authorization filters: Authentication,Authorization 
+Action filters: OnActionExecuted, OnActionExecuting
+Result filters: OnResultExecuted, OnResultExecuting
+Exception filters: HandleErrorAttribute 
+
+Action Selector: ActionName, AcceptVerb
+NonAction 
+Action Filter
+Authorize and AllowAnonymous action filters
+childactiononly attribute
+HandleError attribute
+OutputCache attribute
+CacheProfiles
+RequireHttps attribute
+ValidateInput attribute
+Custom action filters
+types of ActionResult
+Enable client side validation in asp.net mvc
+What is Unobtrusive JavaScript
+Ajax with asp.net mvc
+-------
+Routing(Web.Config)
+system.web.httpModules section
+system.web.httpHandlers section
+system.webserver.modules section
+system.webserver.handlers section
+----------------
+how many ways action to action call
+if db is updated then how can you update cache in c#
+by using SqlCacheDependency
+---------------------------------------------------------------
+LINQ
+---------------------------------------------------------------
+Extension Method
+Aggregate
+Projection Operator(Select/SelectMany)
+Partitioning Operator
+Paging
+Conversation Operator
+GroupBy
+Group Join
+Inner Join
+---------
+result.skip((pagenumber-1)* pagesize).Take(pagesize)
+eager-->Dataloadoptions, Projection
+cache
+4th record using lamda expression
+---------------------------------------------------------------
+Basic:
+---------------------------------------------------------------
+Delegate,multicast delegate, event, anonymous method
+Sync, Async
+Recursion Example: Use Folder Structure
+Constructor in abstract class (private,public,protected)
+call a abstract method from abstract class
+int, int32: same
+1. enum test: int  --int32 is now allowed here
+{xxx = 1}
+2. using System; 
+is required for int32 and not for int
+int32 i=10
+
+how to reverse the word
+var and dynamic, 
+extension method
+
+Error Handling
+Authontication
+Cache
+Unit Testing/Integration Testing
+
+---------------------------------------------------------------
+Web API
+---------------------------------------------------------------
+Content Negotiation:
+Accept Header- Accept: application/xml, Accept: Application/json
+
+FromBody & FromURI
+common concept
+If Request is simple type then web API tries to get the value from URI
+if request is complex type then web api tries to get from request body
+if we want to force api then [FromURIL] and [FromBody] used
+
+Call API from JQuery
+   $(document).ready(function () {
+            var ulEmployees = $('#ulEmployees');
+            $('#btn').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "api/employees/",
+                    dataType: 'json',
+                    success: function (data) {
+                        ulEmployees.empty();
+                        $.each(data, function (index, val) {
+                            var fullName = val.FirstName + ' ' + val.LastName;
+                            ulEmployees.append('<li>' + fullName + '</li>');
+                        });
+                    }
+                });
+            });
+
+Cross Domain (JsonP & CORS)
+JsonP(JSON with Padding):
+1. Install-Package WebApiContrib.Formatting.Jsonp
+2. Register() method of WebApiConfig class in WebApiConfig.cs file in App_Start folder
+var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+config.Formatters.Insert(0, jsonpFormatter);
+3. dataType: 'jsonp'
+
+CORS(Cross Origin Resource Sharing)
+1. Install-Package Microsoft.AspNet.WebApi.Cors
+2. Register() method of WebApiConfig class in WebApiConfig.cs file in App_Start folder
+EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+config.EnableCors();
+3. dataType: 'json'
+
+EnableCorsAttribute(Origin,Header,Methods)
+Origin: Domain(http://www.mywebsite.com)
+Header: accept,content-type,origin
+Methods: GET,POST
+--------------------------
+Basic Authontication:
+1. The BasicAuthenticationAttribute can be applied on a specific controller, specific action, or globally on all Web API controllers
+2. To enable basic authentication across the entire Web API application, register BasicAuthenticationAttribute as a filter using the Register() method in WebApiConfig class
+
+config.Filters.Add(new RequireHttpsAttribute());
+3. You can also apply the attribute on a specific controller, to enable basic authentication for all the methods in that controller
+ $('#btn').click(function () {
+                // Get the username & password from textboxes
+                var username = $('#txtUsername').val();
+                var password = $('#txtPassword').val();
+
+                $.ajax({
+                    type: 'GET',
+                    // Make sure to change the port number to
+                    // where you have the employee service
+                    // running on your local machine
+                    url: 'http://localhost:35171/api/Employees',
+                    dataType: 'json',
+                    // Specify the authentication header
+                    // btoa() method encodes a string to Base64
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(username + ':' + password)
+                    },
+                    success: function (data) {
+                        ulEmployees.empty();
+                        $.each(data, function (index, val) {
+                            var fullName = val.FirstName + ' ' + val.LastName;
+                            ulEmployees.append('<li>' + fullName + ' (' + val.Gender + ')</li>')
+                        });
+                    },
+                    complete: function (jqXHR) {
+                        if (jqXHR.status == '401') {
+                            ulEmployees.empty();
+                            ulEmployees.append('<li style="color:red">'
+                                + jqXHR.status + ' : ' + jqXHR.statusText + '</li>')
+                        }
+                    }
+                });
+            });
+
+-----------------
+
+Token Authontication:
+ "Web API" and set Authentication to "Individual User Accounts" and click "OK". The Individual User Accounts option uses a membership database in which the users that we register will be stored.
+
+The code that generates the access token is provided by ASP.NET Web API out of the box. To see this code open the file "Startup.Auth.cs" that is present in App_Start folder. Notice in the ConfigureAuth() method
+An instance of OAuthAuthorizationServerOptions is created
+The /Token end point to which we have posted username and password is specified in here
+The token expiry is specified using AccessTokenExpireTimeSpan property. In this case the token expires 14 days after it is issued. You can change this to meet your application needs.
+The Provider property is initialised with a new instance of ApplicationOAuthProvider class. This class has GrantResourceOwnerCredentials() method which verifies if the provided username and password are valid. If valid an access token is issued. The token is generated when context.Validated(ticket) method is called.
+Now let us see how to call EmployeesController and retrieve employees data.
+
+If we issue a GET request to http://localhost:61358/api/employees we get 401 Unauthorized error. Since the EmployeesController is decorated with [Authorize] attribute, the request needs to be authenticated. So with every request we have to send the Bearer token using Authorization header as shown in fiddler below.
+Authorization : Bearer_gfjgg765865hfhggfjhg67576fhgfhgfh
+
+ $('#btnLogin').click(function () {
+                $.ajax({
+                    // Post username, password & the grant type to /token
+                    url: '/token',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: {
+                        username: $('#txtUsername').val(),
+                        password: $('#txtPassword').val(),
+                        grant_type: 'password'
+                    },
+                    // When the request completes successfully, save the
+                    // access token in the browser session storage and
+                    // redirect the user to Data.html page. We do not have
+                    // this page yet. So please add it to the
+                    // EmployeeService project before running it
+                    success: function (response) {
+                        sessionStorage.setItem("accessToken", response.access_token);
+                        window.location.href = "Data.html";
+                    },
+                    // Display errors if any in the Bootstrap alert <div>
+                    error: function (jqXHR) {
+                        $('#divErrorText').text(jqXHR.responseText);
+                        $('#divError').show('fade');
+                    }
+                });
+            });
+
+Fiddler/Postman
+IHttpActionResult vs HttpResponseMessage
+---------------------------------------------------------------
+SQL
+---------------------------------------------------------------
+Normalization
+Cluster/Non Cluster Index
+
+---------------------------------------------------------------
+Java Script
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+Basic
+---------------------------------------------------------------
+SOLID
+Single Responsibility Principle
+Open Closed Principle
+Liskov Substitution Principle : Parent should easily replace child. enquiry customer (No Add Method)
+Interface Segregation Principle: Read Method
+Dependency Inversion Principle
+
+Design Pattern:
+
+Creational: Builder, Protype, Singleton
+Structural: Adapter, Bridge, Composite 
+Behavioral
+
+Creation Pattern:
+-----------
+Builder Pattern:  Required when construction pattern is complex. 
+Example: Invoice with Tax and Invoice Without Tax
+
+Builder: All the method defined
+Director: Create methods of different type as per required method sequence
+Product: Final Product
+-----------
+Prototype Patter: We clone the existing object which doesn't impact the main object
+this.MemberWiseClone()
+obj1.getClone()
+
+Shallow Cloning: When only Parent is cloned 
+Deep Cloning: When Parent objects are Cloned with containing objects
+----------------------
+Singleton Pattern: One copy shared across the client
+private constructor
+static method
+-------------
+Adapter Pattern: Object Adapter way and Class Adapter Way
+
+
+
+
+1. Anonymous Method
+delegate int PointtoAddFunction(int num1, int num2);
+
+PointtoAddFunction pObj = delegate(int num1,int num2)
+				{ return num1 + num2; }
+
+string str = pObj.Invoke(2,2).ToString();
+
+2. Tuples
+Tuple<string,string,string,double> Testdata(string str){
+return Tuples.Create<string,string,string,double>(data[0],data[1],data[2],data[3])
+}
+
+Anonymous Type
+return new {str1=data[0],str2=data[1],str3=data[2],str4=data[3]}
+
+call Tuples: var myInfo= Testdata(str)
+myInfo.Item1
+myInfo.Item2
+myInfo.Item3
+myInfo.Item4
+
+call AnonymousType: var myInfo= Testdata(str)
+myInfo.str1
+myInfo.str2
+myInfo.str3
+myInfo.str4
+
+
+
+DDD - Decoupled, development, deployment
+Microservice: Explicit boundaries, Autonomous, Shared Schema/Contract, Policy Based Compatibility
+
+name,phone, billamt,bill date, address
+Concept or Vision Document (Proposal)
+Artistic Design Document
+Technical Design Document
+Project Schedule
+Software Testing Plan
+Risk Mitigation Plan
+
+
+Service Strategy. ...
+Service Design. ...
+Service Transition. ...
+Service Operation. ...
+Continual Service Improvement.
+
+
+Structural, Creational, Behaviour 
+
+
+dirty read, repeated read, phantom read
+isolation level,
+update lock, Shared Lock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Angular2:
+directive, interpolation, template binding, event binding & cloning
+two way binding
+Modules, Component,ng-model & expression
+Input, Output, eventemitters
+providers, services & dependency injection
+
+08067178822
+
+
+

@@ -1,0 +1,50 @@
+git clone --recursive https://github.com/aspnet/AspNetCore.git
+
+git tag
+
+git checkout v3.1.2
+
+Windows explorer click File-->Open Windows PowerShell-->Open Windows PowerShell as Administrator
+
+Write InstallVisual and press tab then powershell script name will appear automatically
+
+.\InstallVisualStudio.ps1 
+
+.\InstallVisualStudio.ps1 -edition community -channel preview
+
+Set-ExecutionPolicy RemoteSigned
+
+Rerun the script
+.\InstallVisualStudio.ps1 -edition community -channel preview
+
+install the visual studio installer for us
+
+D:\20-02-2020\AspNetCore> restore
+
+Copy Path: D:\20-02-2020\AspNetCore\src\Mvc\Mvc.sln
+
+D:\20-02-2020\AspNetCore> startvs D:\20-02-2020\AspNetCore\src\Mvc\Mvc.sln
+
+----------------------
+.nuget\packages\microsoft.dotnet.arcade.sdk\1.0.0-beta.19607.3\tools\Tools.proj : error : Version 3.1.1
+00 of the .NET Core SDK requires at least version 16.3.0 of MSBuild. The current available version of MSBuild is 16.0.4
+61.62831. Change the .NET Core SDK specified in global.json to an older version that requires the MSBuild version curre
+ntly available.
+
+
+OWASP
+use case
+Unit testing
+technical documentation
+define test cases,metrics, and resolve questions about test results.
+Create unit tests
+functional tests
+
+
+Angular.js,
+SQL
+web architectural and design patterns
+(Object modeling, use cases, activity diagrams, and UML).
+various forms of SSO and an understanding of security best practices such as
+OWASP
+

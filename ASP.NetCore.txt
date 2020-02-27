@@ -1,0 +1,26 @@
+ASP.NET Core is a cross-platform, high-performance, open-source framework for building modern, cloud-based, Internet-connected applications.
+
+benefits and features:
+	Cross Platform
+	Unified Programming Model for MVC and Web API
+	Dependency Injection
+	Testability 
+	Open-source and community-focused
+	Modular HTTP Request Pipeline
+
+There are 2 softwares that we need to install for .net core application development.
+An Editor
+.NET Core SDK (Software Development Kit)
+
+Editor: 
+Visual Studio
+Visual Studio Code
+Sublime
+Vim
+Atom
+Etc.
+
+1. Visual Studio Community Edition is free. downloaded from https://visualstudio.microsoft.com/
+To develop .NET Core applications in Visual Studio 2017, please select .NET Core cross-platform development workload
+2. Download and install .NET Core SDK 
+https://dotnet.microsoft.com/download
