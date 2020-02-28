@@ -1,0 +1,12 @@
+Tools and application to use for performance and Tuning:
+1. Performance Monitor
+2. Activity Monitor
+3. SQL Profiler
+4. Data Management Views
+5. Database Console Command
+6. System Stored Procedures
+7. Execution Plans
+8. DB tuning advisor
+9. SQL standard reports
+
+https://www.youtube.com/watch?v=Ch8K1fvjzpo
