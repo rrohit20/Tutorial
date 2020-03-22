@@ -1,3 +1,4 @@
+Control Panel-->User Account and Family-->Credential Manager-->Generic Manager--> Remove the Git key
 ----------------------
 git init
 git add .
